@@ -73,15 +73,15 @@ const HOLIDAY_KITS = [
  {
   "name": "Camping Kit",
   "img": "assets/holiday/kit-4.jpg",
-  "items": [
-   "h013",
+   "items": [
    "h088",
-   "h047",
-   "h030"
+   "h011",
+   "h031",
+   "h073"
   ]
  },
  {
-  "name": "Slow Living Kit",
+  "name": "Wellness Kit",
   "img": "assets/holiday/kit-5.jpg",
   "items": [
    "h124",
