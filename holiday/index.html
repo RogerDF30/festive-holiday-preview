@@ -807,7 +807,7 @@ body.mode-holiday .catalog-hero{background:linear-gradient(90deg,rgba(60,6,10,.9
           <div class="field" data-field="phone"><label for="phone" class="sr-only">Mobile number</label><div class="inwrap with-ico phone-wrap"><svg class="fico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h4l2 5-3 2a12 12 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 4 6a2 2 0 0 1 0-2z"/></svg><input class="cc" id="cc" type="text" value="+91" aria-label="Country code" /><input id="phone" type="tel" inputmode="numeric" placeholder="Mobile number" autocomplete="tel" /></div><div class="msg">Enter a valid 10-digit mobile number.</div></div>
           <div class="field" data-field="org"><label for="org" class="sr-only">Organization</label><div class="inwrap with-ico"><svg class="fico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16"/><path d="M15 9h4a1 1 0 0 1 1 1v11"/><path d="M7 8h2M7 12h2M7 16h2"/></svg><input id="org" type="text" placeholder="Company name" autocomplete="organization" /></div><div class="msg">Please enter your organization.</div></div>
         </div>
-        <div class="cta-row"><div class="cat-pick" id="catPick"><button type="button" class="btn-ghost" id="catPickBtn" aria-haspopup="true" aria-expanded="false">CompanyStore Catalogs <span class="chev">⌄</span></button><div class="cat-menu" id="catMenu" role="menu"><a role="menuitem" href="../diwali/"><b>Diwali Collection 2026</b><small>The festive catalogue</small></a><a role="menuitem" href="../"><b>All catalogues</b><small>Back to the catalogue chooser</small></a></div></div><button type="submit" class="btn-primary" id="viewCatalogBtn" data-go="holiday">Holiday Catalog <span class="arr">›</span></button></div>
+        <button type="submit" class="btn-primary" id="viewCatalogBtn" data-go="holiday">View Catalog →</button>
         <div class="reassure">🔒 Every field required · we only use this to help with your gifting</div>
       </form>
       <div class="steps2 steps-landing">
@@ -1570,14 +1570,6 @@ document.getElementById('switchCat').addEventListener('click',function(){locatio
 
 /* ---------- landing: catalogue picker ---------- */
 (function(){
-  const pick=document.getElementById('catPick'),btn=document.getElementById('catPickBtn');
-  btn.addEventListener('click',function(e){e.stopPropagation();const o=pick.classList.toggle('open');btn.setAttribute('aria-expanded',o);});
-  document.addEventListener('click',function(){pick.classList.remove('open');btn.setAttribute('aria-expanded','false');});
-  pick.querySelectorAll('[data-go]').forEach(function(b){b.addEventListener('click',function(){
-    pendingMode=b.dataset.go;pick.classList.remove('open');
-    const f=document.getElementById('leadForm');
-    if(f.requestSubmit)f.requestSubmit();else f.dispatchEvent(new Event('submit',{cancelable:true}));
-  });});
   document.getElementById('viewCatalogBtn').addEventListener('click',function(){pendingMode='holiday';});
 })();
 
