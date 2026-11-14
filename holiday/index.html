@@ -742,7 +742,22 @@ a{color:inherit}
 .gdots{position:absolute;bottom:16px;left:0;right:0;display:flex;justify-content:center;gap:8px;z-index:3}
 .gdots button{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.55);transition:all .2s}
 .gdots button.on{background:#fff;width:24px;border-radius:6px}
-@media(max-width:560px){.gslide{align-items:flex-end;padding:20px 16px 44px}.gnav{display:none}}
+@media(max-width:560px){
+  .goodies{padding:28px 0 6px}
+  .goodies-title{margin-bottom:14px;padding:0 16px}
+  .gslide{display:block;min-height:0;padding:58vw 16px 46px;background-color:#fff;background-size:auto 70vw;background-position:center top;background-repeat:no-repeat}
+  .gcard{width:100%;display:grid;grid-template-columns:38% 1fr;border-radius:14px;box-shadow:0 14px 34px rgba(43,41,42,.22)}
+  .gimg{aspect-ratio:auto;height:100%;min-height:150px}
+  .gbody{padding:12px;display:flex;flex-direction:column}
+  .gname{font-size:.92rem;line-height:1.25}
+  .gdesc{font-size:.74rem;margin-bottom:4px}
+  .gprice{font-size:1rem;margin:2px 0 8px}
+  .gbody .add{margin-top:auto;padding:9px 10px;font-size:.8rem}
+  .gcard .cat-tag{display:none}
+  .gdots{bottom:16px}
+  .gdots button{background:#e2d4d4}.gdots button.on{background:var(--red)}
+  .gnav{display:none}
+}
 
 /* ==================== HOLIDAY 2026 · catalogue per Figma "Homepage" / "Theme Page" ==================== */
 body.mode-holiday .catalog-hero{background:linear-gradient(90deg,rgba(60,6,10,.92) 0%,rgba(80,10,16,.72) 45%,rgba(80,10,16,.15) 100%),url('assets/holiday/banner-2.jpg') center/cover no-repeat}
@@ -768,7 +783,18 @@ body.mode-holiday .catalog-hero{background:linear-gradient(90deg,rgba(60,6,10,.9
 .tk-add{background:#E7B84C!important;color:#2B292A!important;align-self:flex-start;padding-left:22px;padding-right:22px}
 .tk.hero .tk-add{align-self:flex-end}
 @media(max-width:900px){.tk.third{grid-column:span 3}}
-@media(max-width:560px){.themes{grid-template-columns:1fr}.tk,.tk.hero,.tk.third,.tk.half{grid-column:auto}.tk.hero .tk-body{flex-direction:column;align-items:stretch}.tk.hero .tk-side{align-items:flex-start}.tk.hero .tk-img{aspect-ratio:4/3}}
+/* mobile polish (holiday) */
+@media(max-width:560px){
+  .topbar .welcome{display:flex;gap:10px;font-size:0}
+  .topbar .welcome b,#welcomeIco,#signOut{display:none}
+  .topbar .welcome .switchcat{font-size:.74rem;margin:0}
+  .thumb .cat-tag{display:none}
+  .tk-side{flex-direction:row;align-items:center;justify-content:space-between;gap:10px}
+  .tk.hero .tk-side{align-items:center}
+  .tk-add,.tk.hero .tk-add{align-self:center}
+  .form-scroll{padding-bottom:92px}
+}
+@media(max-width:560px){.themes{grid-template-columns:1fr}.tk,.tk.hero,.tk.third,.tk.half{grid-column:auto}.tk.hero .tk-body{flex-direction:column;align-items:stretch}.tk.hero .tk-img{aspect-ratio:4/3}}
 
 </style>
 </head>
