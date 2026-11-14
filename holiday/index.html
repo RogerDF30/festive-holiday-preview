@@ -1365,7 +1365,7 @@ function makeKits(pool,budget,count,allowRepeat,minTotal){
 
 /* ---------- top tabs: Build Your Box / Custom Box ---------- */
 function renderTopTabs(){
-  $('#filters').innerHTML=(state.mode==='holiday'?[['byb','Select Your Gifts'],['custom','Price Tiers'],['themes','Themes'],['top','Top Rated']]:[['byb','Select Your Gifts'],['custom','Price Tiers'],['top','Top Rated']])
+  $('#filters').innerHTML=(state.mode==='holiday'?[['byb','Curate Your Kit'],['custom','Price Tiers'],['themes','Themes'],['top','Top Rated']]:[['byb','Select Your Gifts'],['custom','Price Tiers'],['top','Top Rated']])
    .map(function(x){return '<button class="chip '+(state.tab===x[0]?'active':'')+'" data-top="'+x[0]+'">'+x[1]+'</button>';}).join('');
 }
 function switchTop(t){state.tab=t;renderTopTabs();renderView();window.scrollTo({top:0,behavior:'smooth'});}
