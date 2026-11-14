@@ -2,10 +2,11 @@
    HOLIDAY GIFTING 2026 — data file (edit this file, not index.html)
    ---------------------------------------------------------------------
    GOODIES_SLIDES  : "Goodies That Get Noticed" carousel on the landing page.
-                     Add as many objects as you like. Each slide needs a
-                     background image (bg) and EITHER a product id from
-                     HOLIDAY_PRODUCTS ("product") OR explicit card fields:
-                     {bg, img, title, desc, price, moq, cat}.
+                     Add as many slides as you like. Each slide needs a
+                     background image (bg) and "spots": the clickable
+                     points on that image (x, y in % of the image) and the
+                     HOLIDAY_PRODUCTS id each one opens in the left card.
+                     The first spot is shown by default (or set "product").
    HOLIDAY_KITS    : "Themes" tab. items = product ids from HOLIDAY_PRODUCTS.
                      The kit price shown is the sum of its item prices.
    HOLIDAY_PRODUCTS: snapshot of the "Holiday Gifting Storelink Format"
@@ -16,11 +17,25 @@
 const GOODIES_SLIDES = [
  {
   "bg": "assets/holiday/goodies-1.jpg",
-  "product": "h078"
+  "spots": [
+   {"x": 44.5, "y": 64.3, "product": "h078"},
+   {"x": 61.1, "y": 55.5, "product": "h033"},
+   {"x": 75.4, "y": 25.1, "product": "h018"},
+   {"x": 64.6, "y": 77.4, "product": "h000"},
+   {"x": 84.4, "y": 69.8, "product": "h057"}
+  ]
  },
  {
   "bg": "assets/holiday/goodies-2.jpg",
-  "product": "h101"
+  "spots": [
+   {"x": 75.4, "y": 25.1, "product": "h083"},
+   {"x": 61.1, "y": 55.5, "product": "h088"},
+   {"x": 44.5, "y": 64.3, "product": "h088"},
+   {"x": 64.6, "y": 77.4, "product": "h102"},
+   {"x": 84.4, "y": 69.8, "product": "h107"},
+   {"x": 95.6, "y": 62.1, "product": "h107"},
+   {"x": 85.7, "y": 93.3, "product": "h121"}
+  ]
  }
 ];
 

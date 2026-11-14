@@ -689,11 +689,12 @@ a{color:inherit}
 .s2-sep{align-self:start;margin-top:6px;color:var(--gold-bright);font-size:1.35rem;opacity:.7;text-align:center}
 @media(max-width:560px){.s2-flow{grid-template-columns:1fr;gap:8px}.s2-sep{display:none}.s2-flow .step{flex-wrap:nowrap;justify-content:flex-start;text-align:left}.s2-flow .lbl{flex-basis:auto;text-align:left}}
 /* ==================== HOLIDAY 2026 · landing per Figma "Landing Page V1" ==================== */
-.form-side{background:radial-gradient(120% 90% at 90% 0%,#ff3b40 0%,#E51D23 38%,#B8121A 78%,#8E0F17 100%)}
+.form-side{background:#E01E23 url(assets/holiday/landing-tree.jpg) center bottom/cover no-repeat}
 .form-side .bulbs,.form-side .rangoli-f,.form-plush,.why-strip .diyas,.steps-landing{display:none!important}
 .form-side::after{content:"🎁";position:absolute;top:26px;right:28px;font-size:34px;filter:drop-shadow(0 8px 14px rgba(0,0,0,.3));z-index:5;animation:float 4s ease-in-out infinite}
-.form-side::before{content:"";position:absolute;right:-30px;bottom:-30px;width:190px;height:190px;z-index:1;opacity:.95;pointer-events:none;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cg transform='rotate(-18 100 100)'%3E%3Crect x='40' y='70' width='110' height='80' rx='6' fill='%23fff'/%3E%3Crect x='88' y='70' width='14' height='80' fill='%23E51D23'/%3E%3Crect x='40' y='102' width='110' height='14' fill='%23E51D23'/%3E%3C/g%3E%3Cg transform='rotate(14 150 60)'%3E%3Crect x='118' y='30' width='60' height='46' rx='5' fill='%23fff'/%3E%3Crect x='143' y='30' width='9' height='46' fill='%23E51D23'/%3E%3C/g%3E%3C/svg%3E") no-repeat center/contain}
+.form-side::before{content:"";position:absolute;right:-6px;bottom:-14px;width:200px;height:190px;z-index:1;pointer-events:none;filter:drop-shadow(0 14px 22px rgba(0,0,0,.35));
+  background:url(assets/holiday/giftbox-a.png) no-repeat right 22px top 6px/46px auto,url(assets/holiday/giftbox-b.png) no-repeat left 0 bottom 0/150px auto}
+@media(max-width:560px){.form-side::before{width:150px;height:140px}.form-side::before{background-size:34px auto,110px auto}}
 .form-intro .eyebrow{color:#fff;opacity:.92}
 .form-intro h1{font-size:clamp(2rem,3.3vw,2.9rem);margin-bottom:4px}
 .form-intro .sub-gold{color:var(--gold-bright);font-weight:800;font-size:clamp(1.05rem,1.6vw,1.35rem);margin-bottom:14px}
@@ -723,10 +724,10 @@ a{color:inherit}
 /* Goodies That Get Noticed */
 .goodies{background:#fff;padding:34px 0 0}
 .goodies-title{text-align:center;font-size:clamp(1.25rem,2.4vw,1.75rem);font-weight:800;margin-bottom:22px}
-.goodies-title .g1{color:#9b9b9b}.goodies-title .g2{color:#c9c9c9;font-weight:600}.goodies-title .g3{color:var(--onyx)}
+.goodies-title .g1,.goodies-title .g2,.goodies-title .g3{color:var(--onyx);font-weight:800}
 .gcar{position:relative;overflow:hidden}
 .gtrack{display:flex;transition:transform .7s cubic-bezier(.6,.05,.2,1)}
-.gslide{flex:0 0 100%;min-height:clamp(420px,48vw,640px);background-size:cover;background-position:center;position:relative;display:flex;align-items:center;padding:4% 5%}
+.gslide{flex:0 0 100%;aspect-ratio:1800/765;min-height:0;background-size:cover;background-position:center;position:relative;display:flex;align-items:center;padding:4% 5%}
 .gcard{width:min(300px,78%);background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 22px 50px rgba(0,0,0,.3);position:relative}
 .gcard .cat-tag{position:absolute;top:10px;left:10px;z-index:2;background:rgba(43,41,42,.72);color:#fff;font-size:.66rem;font-weight:700;letter-spacing:.04em;padding:5px 10px;border-radius:30px}
 .gimg{aspect-ratio:1/1;background:#f4efe8}
@@ -745,7 +746,10 @@ a{color:inherit}
 @media(max-width:560px){
   .goodies{padding:28px 0 6px}
   .goodies-title{margin-bottom:14px;padding:0 16px}
-  .gslide{display:block;min-height:0;padding:58vw 16px 46px;background-color:#fff;background-size:auto 70vw;background-position:center top;background-repeat:no-repeat}
+  .gslide{display:block;aspect-ratio:auto;min-height:0;padding:calc(42.5vw + 14px) 16px 46px;background-color:#fff;background-size:100% auto;background-position:center top;background-repeat:no-repeat}
+  .gscene{inset:0 0 auto 0;height:42.5vw}
+  .gspot{width:30px;height:30px;margin:-15px 0 0 -15px}.gspot::before{inset:7px}.gspot::after{inset:12px}.gspot .gtip{display:none}
+  .ghint{margin:-6px 0 10px;padding:0 16px}
   .gcard{width:100%;display:grid;grid-template-columns:38% 1fr;border-radius:14px;box-shadow:0 14px 34px rgba(43,41,42,.22)}
   .gimg{aspect-ratio:auto;height:100%;min-height:150px}
   .gbody{padding:12px;display:flex;flex-direction:column}
@@ -757,6 +761,25 @@ a{color:inherit}
   .gdots{bottom:16px}
   .gdots button{background:#e2d4d4}.gdots button.on{background:var(--red)}
   .gnav{display:none}
+}
+
+.steps .sico{width:18px;height:18px;object-fit:contain;opacity:.95}
+/* goodies hotspots */
+.gscene{position:absolute;inset:0;z-index:1}
+.gspot{position:absolute;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;background:transparent;cursor:pointer;z-index:2}
+.gspot::before{content:"";position:absolute;inset:6px;border-radius:50%;border:2px solid rgba(255,255,255,.95);box-shadow:0 0 0 0 rgba(255,255,255,.6);animation:gpulse 2.2s ease-out infinite}
+.gspot::after{content:"";position:absolute;inset:13px;border-radius:50%;background:#fff}
+.gspot.on::before{border-color:#E01E23;background:rgba(224,30,35,.25);animation:none;inset:3px}
+.gspot.on::after{background:#E01E23}
+.gspot .gtip{position:absolute;left:50%;bottom:calc(100% + 6px);transform:translateX(-50%);white-space:nowrap;background:rgba(18,18,18,.86);color:#fff;font-size:.72rem;font-weight:700;padding:5px 9px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .15s}
+.gspot:hover .gtip,.gspot:focus-visible .gtip{opacity:1}
+@keyframes gpulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.55)}70%{box-shadow:0 0 0 12px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+.gcard{z-index:2;transition:opacity .2s}.gcard.swap{opacity:.25}
+.ghint{text-align:center;color:var(--slate);font-size:.82rem;margin:-12px 0 14px}
+@media(max-width:560px){
+  .gscene{inset:0 0 auto 0;height:42.5vw}
+  .gspot{width:30px;height:30px;margin:-15px 0 0 -15px}.gspot::before{inset:7px}.gspot::after{inset:12px}.gspot .gtip{display:none}
+  .ghint{margin:-6px 0 10px;padding:0 16px}
 }
 
 /* ==================== HOLIDAY 2026 · catalogue per Figma "Homepage" / "Theme Page" ==================== */
@@ -869,6 +892,7 @@ body.mode-holiday .catalog-hero{background:linear-gradient(90deg,rgba(60,6,10,.9
   <!-- GOODIES THAT GET NOTICED · slides come from GOODIES_SLIDES in holiday-data.js -->
   <section class="goodies" id="goodies">
     <h2 class="goodies-title"><span class="g1">Goodies</span> <span class="g2">That</span> <span class="g3">Get Noticed</span></h2>
+    <p class="ghint">Tap a product in the picture to see it here</p>
     <div class="gcar" id="gcar">
       <div class="gtrack" id="gtrack"></div>
       <button class="gnav prev" id="gPrev" aria-label="Previous">‹</button>
@@ -1572,7 +1596,7 @@ const MODE_COPY={
   diwali:{eyebrow:'Diwali Collection 2026',title:'Gifts worth unboxing',ico:'🪔',
     steps:'<div class="step"><span class="n">1</span><span class="lbl">Share your details</span></div><span class="sep">›</span><div class="step"><span class="n">2</span><span class="lbl">Select products / kits<em>(note the MOQ)</em></span></div><span class="sep">›</span><div class="step"><span class="n">3</span><span class="lbl">Submit &amp; get a quote</span></div>'},
   holiday:{eyebrow:'Holiday Gifting Collection 2026',title:'Curate Your <span class="glow">Kit</span>',ico:'🎄',
-    steps:'<div class="step"><span class="n">1</span><span class="lbl">Pick your gifts</span></div><span class="sep">›</span><div class="step"><span class="n">2</span><span class="lbl">Submit to get quote<em>(note the MOQ)</em></span></div><span class="sep">›</span><div class="step"><span class="n">3</span><span class="lbl">Get your custom deck and place order</span></div>'}
+    steps:'<div class="step"><span class="n">1</span><img class="ico sico" src="assets/holiday/step-1.png" alt="" aria-hidden="true"><span class="lbl">Pick your gifts</span></div><span class="sep">›</span><div class="step"><span class="n">2</span><img class="ico sico" src="assets/holiday/step-2.png" alt="" aria-hidden="true"><span class="lbl">Submit to get quote<em>(note the MOQ)</em></span></div><span class="sep">›</span><div class="step"><span class="n">3</span><img class="ico sico" src="assets/holiday/step-3.png" alt="" aria-hidden="true"><span class="lbl">Get your custom deck and place order</span></div>'}
 };
 function setMode(m){
   if(m!=='diwali'&&m!=='holiday')m='holiday';
@@ -1630,8 +1654,8 @@ function flushPendingAdd(){
   if(!pendingAdd)return;const id=pendingAdd;pendingAdd=null;
   setTimeout(function(){addToBox(id);},250);
 }
-function goodiesAdd(i){
-  const s=GOODIES_SLIDES[i],p=s.product&&HOLIDAY_BY_ID[s.product];
+function goodiesAdd(id){
+  const p=HOLIDAY_BY_ID[id];
   if(!p){toast('Share your details above to request this');document.getElementById('leadForm').scrollIntoView({behavior:'smooth',block:'center'});return;}
   if(state.lead){setMode('holiday');goCatalog(state.lead.name);setTimeout(function(){addToBox(p.id);},300);return;}
   pendingAdd=p.id;
@@ -1639,36 +1663,47 @@ function goodiesAdd(i){
   document.getElementById('leadForm').scrollIntoView({behavior:'smooth',block:'center'});
   setTimeout(function(){const n=document.getElementById('name');if(n)n.focus({preventScroll:true});},500);
 }
+function goodiesCard(p){
+  if(!p)return '';
+  return (p.cat?'<span class="cat-tag">'+p.cat+'</span>':'')+
+    '<div class="gimg"><img src="'+p.img+'" alt="'+p.name.replace(/"/g,'&quot;')+'" onerror="this.onerror=null;this.src=FALLBACK_IMG"></div>'+
+    '<div class="gbody"><div class="gname">'+p.name+'</div><div class="gdesc">'+(p.desc||'')+'</div>'+
+    (p.moq?'<div class="card-moq">MOQ '+p.moq+'+ units</div>':'')+
+    '<div class="gprice">'+(p.price!=null?genMoney(p.price):'<small>On request</small>')+'</div>'+
+    '<button class="add" data-gadd="'+p.id+'">Add to box +</button></div>';
+}
 (function(){
   const track=document.getElementById('gtrack');if(!track||typeof GOODIES_SLIDES==='undefined')return;
-  const slides=GOODIES_SLIDES.map(function(s){
-    const p=s.product?HOLIDAY_BY_ID[s.product]:null;
-    return {bg:s.bg,img:s.img||(p&&(p.img2&&s.useAltImg?p.img2:p.img)),title:s.title||(p&&p.name)||'',
-      desc:s.desc||(p&&p.desc)||'',price:s.price!=null?s.price:(p&&p.price),moq:s.moq||(p&&p.moq),cat:s.cat||(p&&p.cat)||''};
-  });
+  const slides=GOODIES_SLIDES.filter(function(s){return s&&s.bg;});
   if(!slides.length){document.getElementById('goodies').style.display='none';return;}
   track.innerHTML=slides.map(function(s,i){
-    return '<div class="gslide" style="background-image:url(\''+s.bg+'\')">'+
-      '<div class="gcard">'+(s.cat?'<span class="cat-tag">'+s.cat+', All Products</span>':'')+
-      '<div class="gimg">'+(s.img?'<img src="'+s.img+'" alt="'+s.title+'" onerror="this.onerror=null;this.src=FALLBACK_IMG">':'')+'</div>'+
-      '<div class="gbody"><div class="gname">'+s.title+'</div><div class="gdesc">'+s.desc+'</div>'+
-      (s.moq?'<div class="card-moq">MOQ '+s.moq+'+ units</div>':'')+
-      '<div class="gprice">'+(s.price!=null?genMoney(s.price):'<small>On request</small>')+'</div>'+
-      '<button class="add" onclick="goodiesAdd('+i+')">Add to box +</button></div></div></div>';
+    const spots=(s.spots||[]).filter(function(h){return HOLIDAY_BY_ID[h.product];});
+    const first=s.product||(spots[0]&&spots[0].product);
+    return '<div class="gslide" data-s="'+i+'" style="background-image:url(\''+s.bg+'\')">'+
+      '<div class="gscene">'+spots.map(function(h){const p=HOLIDAY_BY_ID[h.product];
+        return '<button class="gspot'+(h.product===first?' on':'')+'" style="left:'+h.x+'%;top:'+h.y+'%" data-p="'+h.product+'" aria-label="'+p.name.replace(/"/g,'&quot;')+'"><span class="gtip">'+p.name+'</span></button>';}).join('')+'</div>'+
+      '<div class="gcard">'+goodiesCard(HOLIDAY_BY_ID[first])+'</div></div>';
   }).join('');
+  track.addEventListener('click',function(e){
+    const add=e.target.closest('[data-gadd]');if(add){goodiesAdd(add.dataset.gadd);return;}
+    const sp=e.target.closest('.gspot');if(!sp)return;
+    const slide=sp.closest('.gslide'),card=slide.querySelector('.gcard');
+    slide.querySelectorAll('.gspot').forEach(function(x){x.classList.toggle('on',x===sp);});
+    card.classList.add('swap');
+    setTimeout(function(){card.innerHTML=goodiesCard(HOLIDAY_BY_ID[sp.dataset.p]);card.classList.remove('swap');},150);
+  });
   const dots=document.getElementById('gDots');
   dots.innerHTML=slides.map(function(s,i){return '<button aria-label="Slide '+(i+1)+'" data-i="'+i+'"></button>';}).join('');
-  let cur=0,timer=null;
+  let cur=0;
   function go(i){cur=(i+slides.length)%slides.length;track.style.transform='translateX(-'+(cur*100)+'%)';
     dots.querySelectorAll('button').forEach(function(d,x){d.classList.toggle('on',x===cur);});}
-  function auto(){clearInterval(timer);if(slides.length>1)timer=setInterval(function(){go(cur+1);},5500);}
-  document.getElementById('gPrev').onclick=function(){go(cur-1);auto();};
-  document.getElementById('gNext').onclick=function(){go(cur+1);auto();};
-  dots.addEventListener('click',function(e){const b=e.target.closest('[data-i]');if(b){go(+b.dataset.i);auto();}});
+  document.getElementById('gPrev').onclick=function(){go(cur-1);};
+  document.getElementById('gNext').onclick=function(){go(cur+1);};
+  dots.addEventListener('click',function(e){const b=e.target.closest('[data-i]');if(b)go(+b.dataset.i);});
   if(slides.length<2){document.getElementById('gPrev').style.display='none';document.getElementById('gNext').style.display='none';dots.style.display='none';}
   let sx=null;track.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;},{passive:true});
-  track.addEventListener('touchend',function(e){if(sx==null)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40){go(cur+(dx<0?1:-1));auto();}sx=null;});
-  go(0);auto();
+  track.addEventListener('touchend',function(e){if(sx==null)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40)go(cur+(dx<0?1:-1));sx=null;});
+  go(0);
 })();
 setMode('holiday');
 
