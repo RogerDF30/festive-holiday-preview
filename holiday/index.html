@@ -1866,7 +1866,7 @@ function setModalDesc(full){var el=$('#modalDesc');full=String(full||'').trim();
 function toggleDesc(){var tx=document.getElementById('mdText'),b=document.getElementById('mdMore');if(!tx||!b)return;if(b.textContent==='See more'){tx.textContent=state.descFull+' ';b.textContent='See less';}else{tx.textContent=state.descShort+'\u2026 ';b.textContent='See more';}}
 function modalAddLabel(p){return inBox(p.id)?'✓ In your box, tap to remove':'Add to box +';}
 function openModal(id){const p=PRODUCTS.find(x=>x.id===id);if(!p)return;modalProduct=p;
-  var _imgs=[];[p.img].concat(p.imgs||[],(p.variants||[]).map(function(v){return v.img;}),[p.img2]).forEach(function(u){if(u&&_imgs.indexOf(u)<0)_imgs.push(u);});state.modalImgs=_imgs;
+  var _imgs=[];[p.img].concat(p.imgs||[],(p.variants||[]).map(function(v){return v.img;}),[state.mode==='holiday'?null:p.img2]).forEach(function(u){if(u&&_imgs.indexOf(u)<0)_imgs.push(u);});state.modalImgs=_imgs;
   if(_imgs.length>1){$('#modalMedia').innerHTML='<div class="mgallery"><div class="mg-main" id="mgMain"><img src="'+_imgs[0]+'" alt="" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=FALLBACK_IMG"></div><div class="mg-thumbs">'+_imgs.map(function(u,i){return '<button class="mg-t'+(i===0?' on':'')+'" onclick="mgSwap('+i+')"><img src="'+u+'" alt="" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=FALLBACK_IMG"></button>';}).join('')+'</div></div>';}else{$('#modalMedia').innerHTML=media(p);}
   $('#modalCat').textContent=p.cat;$('#modalName').textContent=p.name;
   setModalDesc(p.longDesc||p.desc||'');$('#modalFeats').innerHTML=(p.feats||[]).map(f=>`<li>${f}</li>`).join('')+(p.variants&&p.variants.length>1?'<li class="var-row">Available colours: '+p.variants.map(function(v){var i=_imgs.indexOf(v.img);return '<button class="var-sw" onclick="mgSwap('+i+')">'+v.name+'</button>';}).join(' ')+'</li>':'');
@@ -1902,6 +1902,25 @@ function goCatalog(name){
   const so=document.getElementById('signOut');
   if(so)so.addEventListener('click',()=>{try{localStorage.removeItem('cs_lead');}catch(e){}location.reload();});
   try{const raw=localStorage.getItem('cs_lead');const hm=(location.hash||'').replace('#','');if(raw){const l=JSON.parse(raw);if(l&&l.name){state.lead=l;let m='holiday';try{m=localStorage.getItem('cs_mode')||'holiday';}catch(e){}if(hm==='diwali'||hm==='holiday')m=hm;setMode('holiday');goCatalog(l.name);}}}catch(e){}
+})();
+</script>
+<canvas id="snow" aria-hidden="true" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999"></canvas>
+<script>
+/* ===== round 14: falling snowflakes (decorative) ===== */
+(function(){
+  var c=document.getElementById('snow');if(!c||!c.getContext)return;
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){c.remove();return;}
+  var x=c.getContext('2d'),W,H,D=Math.min(window.devicePixelRatio||1,2),F=[];
+  function size(){W=innerWidth;H=innerHeight;c.width=W*D;c.height=H*D;x.setTransform(D,0,0,D,0,0);}
+  function flake(top){return{x:Math.random()*W,y:top?Math.random()*H:-10,r:1+Math.random()*2.6,v:.4+Math.random()*1.1,s:Math.random()*6.28,w:.3+Math.random()*.7,o:.45+Math.random()*.5};}
+  size();addEventListener('resize',size);
+  var N=W<700?40:80;for(var i=0;i<N;i++)F.push(flake(true));
+  function tick(){x.clearRect(0,0,W,H);
+    for(var i=0;i<F.length;i++){var f=F[i];f.y+=f.v;f.s+=.015;f.x+=Math.sin(f.s)*f.w;
+      if(f.y>H+10||f.x<-10||f.x>W+10)F[i]=flake(false);
+      x.beginPath();x.arc(f.x,f.y,f.r,0,6.283);x.fillStyle='rgba(255,255,255,'+f.o+')';x.fill();}
+    requestAnimationFrame(tick);}
+  requestAnimationFrame(tick);
 })();
 </script>
 </body>
