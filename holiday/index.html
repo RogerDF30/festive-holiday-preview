@@ -228,8 +228,8 @@ a{color:inherit}
 .modal-back{position:absolute;inset:0;background:rgba(43,41,42,.62);backdrop-filter:blur(3px)}
 .modal-card{position:relative;background:#fff;border-radius:22px;width:min(880px,100%);max-height:90vh;overflow:hidden;box-shadow:var(--shadow-lg);display:grid;grid-template-columns:1fr 1fr;animation:pop .28s cubic-bezier(.34,1.4,.5,1)}
 @keyframes pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
-.modal-media{position:relative;min-height:340px;display:flex;align-items:center;justify-content:center}
-.modal-media img{width:100%;height:100%;object-fit:cover}
+.modal-media{position:relative;min-height:340px;display:flex;align-items:center;justify-content:center;background:#fff}
+.modal-media img{width:100%;height:100%;object-fit:contain}
 .modal-info{padding:36px 34px;overflow-y:auto;display:flex;flex-direction:column}
 .modal-info .cat{color:var(--red);font-weight:800;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
 .modal-info h2{font-size:1.7rem;font-weight:800;line-height:1.1;margin-bottom:12px}
@@ -260,8 +260,9 @@ a{color:inherit}
   .landing-split{grid-template-columns:1fr}
   .media-side{min-height:40vh}
   .form-scroll{padding:64px 28px 120px}
-  .modal-card{grid-template-columns:1fr;max-height:88vh}
-  .modal-media{min-height:220px;max-height:34vh}
+  .modal-card{display:block;max-height:88vh;overflow-y:auto}
+  .modal-info{overflow:visible}
+  .modal-media{min-height:0;aspect-ratio:1/1;max-height:46vh}
 }
 @media(max-width:560px){
   .grid{grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:14px;padding:24px 16px 140px}
@@ -619,12 +620,12 @@ a{color:inherit}
 .seemore:hover{text-decoration:underline}
 .mgallery{display:flex;flex-direction:column;height:100%}
 .mg-main{flex:1;min-height:280px;display:flex;align-items:center;justify-content:center;background:#fff;overflow:hidden}
-.mg-main img{width:100%;height:100%;object-fit:cover}
+.mg-main img{width:100%;height:100%;object-fit:contain}
 .mg-thumbs{display:flex;gap:8px;padding:10px 12px;background:var(--cream)}
 .mg-t{width:56px;height:56px;border:2px solid transparent;border-radius:8px;overflow:hidden;background:#fff;cursor:pointer;padding:0}
 .mg-t.on{border-color:var(--red)}
 .mg-t img{width:100%;height:100%;object-fit:cover}
-@media(max-width:860px){.mg-main{min-height:200px}}
+@media(max-width:860px){.mgallery{width:100%}.mg-main{min-height:0}.mg-thumbs{flex:none}}
 
 
 /* ===== round 10: header cart + landing steps ===== */

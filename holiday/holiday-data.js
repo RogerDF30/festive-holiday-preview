@@ -124,6 +124,7 @@ const HOLIDAY_KITS = [
  }
 ];
 
+/* Awaiting real second-angle photos from design for h002, h004, h033 — add as pNNN-2.jpg and re-add to imgs. */
 const HOLIDAY_PRODUCTS = [
  {
   "id": "h000",
@@ -185,10 +186,7 @@ const HOLIDAY_PRODUCTS = [
   ],
   "img": "assets/holiday/p002.jpg",
   "img2": "https://cdn.store.link/products/store18473/uv-q55-novel%20duffle%20bag%20charm%20b.png?versionId=eb7PICUcBLwzCdDncAWVRD.XZIIsPUxA",
-  "tier": "Signature",
-  "imgs": [
-   "assets/holiday/p002-2.jpg"
-  ]
+  "tier": "Signature"
  },
  {
   "id": "h003",
@@ -234,10 +232,7 @@ const HOLIDAY_PRODUCTS = [
   "icon": "\u2b50",
   "img": "assets/holiday/p004.jpg",
   "img2": "https://cdn.store.link/products/store18473/-ahjxk-whatsapp%20image%202026-07-24%20at%2016.36.23%20%281%29.jpeg?versionId=nvlBQzqEhAW___LrZTV870HTDUdZlgJW",
-  "tier": "Pinnacle",
-  "imgs": [
-   "assets/holiday/p004-2.jpg"
-  ]
+  "tier": "Pinnacle"
  },
  {
   "id": "h005",
@@ -837,10 +832,7 @@ const HOLIDAY_PRODUCTS = [
   "img": "assets/holiday/p033.jpg",
   "img2": "https://cdn.store.link/products/store18473/oze04u-arthefact-saba-sling-bag---blacka.jpg?versionId=mUppt2_i1qB69k.FpRlCPJpZtSpC54x.",
   "tier": "Elite",
-  "top10": 1,
-  "imgs": [
-   "assets/holiday/p033-2.jpg"
-  ]
+  "top10": 1
  },
  {
   "id": "h034",
@@ -1465,8 +1457,7 @@ const HOLIDAY_PRODUCTS = [
   "img2": "https://cdn.store.link/products/store18473/01fl1--image%20%2835%29.png?versionId=V_I6XY6YSyCrhB4rK8YZgU1up1hhgieo",
   "tier": "Pinnacle",
   "imgs": [
-   "assets/holiday/p063-2.jpg",
-   "assets/holiday/p063-3.jpg"
+   "assets/holiday/p063-2.jpg"
   ]
  },
  {
