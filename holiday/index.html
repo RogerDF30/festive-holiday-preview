@@ -1612,13 +1612,13 @@ function addKitToBox(i){
 }
 function openEmpPrompt(){
   const pk=state.pendingKit,def=Math.max(pk.maxMoq,(state.gen&&state.gen.emp)||MOQ_FLOOR);
-  document.getElementById('empSub').innerHTML=(pk.label||pk.tier+' kit')+' · '+pk.items.length+' items · '+genMoney(pk.per)+'/person';
+  document.getElementById('empSub').innerHTML=(pk.label||pk.tier+' kit')+' · '+pk.items.length+' items · '+(hasPod(pk.items)?(pk.per>0?genMoney(pk.per)+'/person + '+POD_LABEL+' items':POD_LABEL):genMoney(pk.per)+'/person');
   const inp=document.getElementById('empInput');inp.value=def;inp.min=1;
   updateEmpNote();document.getElementById('empModal').classList.add('open');setTimeout(function(){inp.focus();},50);
 }
 function updateEmpNote(){
   const pk=state.pendingKit,v=parseInt(document.getElementById('empInput').value)||0,note=document.getElementById('empNote');
-  if(v<pk.maxMoq){
+  if(v<pk.maxMoq||(v===pk.maxMoq&&pk.maxMoq>MOQ_FLOOR)){
     const drivers=pk.items.filter(p=>(p.moq||1)===pk.maxMoq);
     if(drivers.length<=2)note.innerHTML='MOQ for '+drivers.map(p=>p.name.split(' ').slice(0,3).join(' ')).join(' & ')+' is '+pk.maxMoq+', so this kit is ordered at '+pk.maxMoq+'/unit.';
     else note.innerHTML='Most items need '+pk.maxMoq+'+ units, so this kit is ordered at '+pk.maxMoq+'/unit.';
@@ -1699,19 +1699,34 @@ function addThemeKit(i){
 /* ---------- GOODIES carousel (GOODIES_SLIDES in holiday-data.js) ---------- */
 let pendingAdd=null;
 let pendingKit=null;
+let pendingView=null;
 function flushPendingAdd(){
   sceneToHeader();
   if(pendingKit!=null){const k=pendingKit;pendingKit=null;setTimeout(function(){goodiesAddKit(k);},250);}
+  if(pendingView){const v=pendingView;pendingView=null;setTimeout(function(){openModal(v);},350);}
   if(!pendingAdd)return;const id=pendingAdd;pendingAdd=null;
   setTimeout(function(){addToBox(id);},250);
 }
-/* Add every product in a goodies scene as one kit, at the highest MOQ among its items */
+/* View details from the goodies card: opens the popup; logged-out visitors sign up first (nothing is added to the box) */
+function goodiesView(id){
+  if(!HOLIDAY_BY_ID[id])return;
+  if(state.lead&&document.getElementById('catalog').classList.contains('active')){openModal(id);return;}
+  if(state.lead){setMode('holiday');goCatalog(state.lead.name);setTimeout(function(){openModal(id);},350);return;}
+  pendingView=id;
+  toast('Share your details to view this gift');
+  document.getElementById('leadForm').scrollIntoView({behavior:'smooth',block:'center'});
+  setTimeout(function(){const n=document.getElementById('name');if(n)n.focus({preventScroll:true});},500);
+}
+/* Add every product in a goodies scene as one kit. Uses the same quantity prompt as Themes, so the
+   visitor sees the kit MOQ (highest MOQ among its items) before anything is added.
+   Kit name: optional "name" on the slide in GOODIES_SLIDES, else "Holiday Goodies N". */
 function goodiesAddKit(si){
   const items=goodiesKitItems(si);if(!items.length)return;
   if(!state.lead){pendingKit=si;toast('Share your details to start your box');document.getElementById('leadForm').scrollIntoView({behavior:'smooth',block:'center'});return;}
-  const emp=Math.max(1,...items.map(function(p){return p.moq||1;}));
-  addKitGroup('Goodies Scene '+(si+1),emp,items);bumpFab();
-  toast('Full kit added: '+items.length+' items × '+emp+' units');
+  const sl=(GOODIES_SLIDES.filter(function(s){return s&&s.bg;})[si])||{},label=sl.name||('Holiday Goodies '+(si+1));
+  const maxMoq=Math.max(1,...items.map(function(p){return p.moq||1;}));
+  state.pendingKit={tier:label,label:label,items:items,maxMoq:maxMoq,per:items.reduce(function(s,p){return s+(p.price||0);},0)};
+  openEmpPrompt();
 }
 /* After login (holiday mode) the goodies scene moves from the landing footer to the catalogue header */
 function sceneToHeader(){
@@ -1772,7 +1787,7 @@ function goodiesCard(p,si){
   track.addEventListener('click',function(e){
     const add=e.target.closest('[data-gadd]');if(add){goodiesAdd(add.dataset.gadd);return;}
     const kb=e.target.closest('[data-gkit]');if(kb){goodiesAddKit(+kb.dataset.gkit);return;}
-    const vw=e.target.closest('[data-gview]');if(vw){if(state.lead&&HOLIDAY_BY_ID[vw.dataset.gview]&&document.getElementById('catalog').classList.contains('active'))openModal(vw.dataset.gview);else goodiesAdd(vw.dataset.gview);return;}
+    const vw=e.target.closest('[data-gview]');if(vw){goodiesView(vw.dataset.gview);return;}
     const sp=e.target.closest('.gspot');if(!sp)return;
     const slide=sp.closest('.gslide'),card=slide.querySelector('.gcard');
     slide.querySelectorAll('.gspot').forEach(function(x){x.classList.toggle('on',x===sp);});

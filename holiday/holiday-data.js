@@ -7,6 +7,8 @@
                      points on that image (x, y in % of the image) and the
                      HOLIDAY_PRODUCTS id each one opens in the left card.
                      The first spot is shown by default (or set "product").
+                     Optional "name" = kit name used by "Add full kit to box"
+                     (default "Holiday Goodies 1", "Holiday Goodies 2", ...).
    HOLIDAY_KITS    : "Themes" tab. items = product ids from HOLIDAY_PRODUCTS.
                      The kit price shown is the sum of its item prices.
    HOLIDAY_PRODUCTS: imgs = extra gallery angles; pod = Price on Demand; variants = colour
