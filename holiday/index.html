@@ -222,6 +222,36 @@ a{color:inherit}
 .cart-foot .btn-primary{width:100%}
 .cart-foot .fineprint{text-align:center;font-size:.72rem;color:var(--slate);margin-top:10px}
 
+/* Goodies scene in the catalogue header (holiday mode, after login) */
+.gbody .gkit{width:100%;margin-top:8px;background:#fff;color:var(--red-deep);border:1.5px solid var(--red-deep);border-radius:30px;padding:10px 12px;font-weight:800;font-size:.82rem;cursor:pointer}
+.gbody .gkit:hover{background:var(--red-deep);color:#fff}
+.gbody .gview{display:block;margin:8px auto 0;background:none;border:none;color:var(--slate);font-size:.78rem;font-weight:700;text-decoration:underline;cursor:pointer}
+#catalog.scene-mode .catalog-hero{display:none}
+#catalog.scene-mode .goodies{padding:0}
+#catalog.scene-mode .goodies-title,#catalog.scene-mode .ghint{display:none}
+.scene-title{display:none}
+#catalog.scene-mode .scene-title{display:block;position:absolute;left:5%;top:7%;z-index:3;pointer-events:none;color:#fff;max-width:600px}
+#catalog.scene-mode .scene-title .eyebrow{color:var(--gold-bright,#E7B84C)}
+#catalog.scene-mode .scene-title h1{font-size:clamp(1.6rem,3vw,2.6rem);font-weight:800;line-height:1.05;margin:8px 0 6px;text-shadow:0 2px 20px rgba(0,0,0,.35)}
+#catalog.scene-mode .scene-title h1 .glow{color:var(--gold-bright,#E7B84C)}
+#catalog.scene-mode .scene-title p{font-size:.9rem;color:rgba(255,255,255,.88)}
+#catalog.scene-mode .gslide::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(60,6,10,.85) 0%,rgba(60,6,10,.55) 30%,rgba(60,6,10,0) 55%);pointer-events:none}
+.scene-steps{background:var(--red-deep,#8E0F17);color:#fff}
+.scene-steps .wrap{max-width:1240px;margin:0 auto;padding:12px 24px}
+.scene-steps .steps{margin-top:0}
+@media(min-width:561px){
+  #catalog.scene-mode .gslide{align-items:flex-end;padding:0 5% 26px}
+  #catalog.scene-mode .gcard{width:min(250px,40%)}
+  #catalog.scene-mode .gimg{aspect-ratio:16/10}
+  #catalog.scene-mode .gdesc{display:none}
+  #catalog.scene-mode .gbody{padding:10px 14px 12px}
+  #catalog.scene-mode .gprice{margin:2px 0 8px}
+  #catalog.scene-mode .gbody .add,#catalog.scene-mode .gbody .gkit{padding-top:8px;padding-bottom:8px}
+}
+@media(max-width:560px){
+  #catalog.scene-mode .scene-title{position:static;max-width:none;padding:18px 18px 14px;background:linear-gradient(135deg,var(--red-deep,#8E0F17),#5c070d)}
+  #catalog.scene-mode .gslide::before{display:none}
+}
 /* Price on Demand: products awaiting a vendor sourcing price */
 .pod{display:inline-flex;align-items:center;gap:5px;font-size:.74rem;font-weight:800;letter-spacing:.02em;color:var(--red-deep);background:#FFF4DA;border:1px solid var(--gold);padding:4px 10px;border-radius:30px;white-space:nowrap;line-height:1.2}
 .pod::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold)}
@@ -1668,27 +1698,64 @@ function addThemeKit(i){
 
 /* ---------- GOODIES carousel (GOODIES_SLIDES in holiday-data.js) ---------- */
 let pendingAdd=null;
+let pendingKit=null;
 function flushPendingAdd(){
+  sceneToHeader();
+  if(pendingKit!=null){const k=pendingKit;pendingKit=null;setTimeout(function(){goodiesAddKit(k);},250);}
   if(!pendingAdd)return;const id=pendingAdd;pendingAdd=null;
   setTimeout(function(){addToBox(id);},250);
+}
+/* Add every product in a goodies scene as one kit, at the highest MOQ among its items */
+function goodiesAddKit(si){
+  const items=goodiesKitItems(si);if(!items.length)return;
+  if(!state.lead){pendingKit=si;toast('Share your details to start your box');document.getElementById('leadForm').scrollIntoView({behavior:'smooth',block:'center'});return;}
+  const emp=Math.max(1,...items.map(function(p){return p.moq||1;}));
+  addKitGroup('Goodies Scene '+(si+1),emp,items);bumpFab();
+  toast('Full kit added: '+items.length+' items × '+emp+' units');
+}
+/* After login (holiday mode) the goodies scene moves from the landing footer to the catalogue header */
+function sceneToHeader(){
+  const g=document.getElementById('goodies'),c=document.getElementById('catalog');
+  if(!g||!c||state.mode!=='holiday'||c.classList.contains('scene-mode'))return;
+  const hero=c.querySelector('.catalog-hero');if(!hero)return;
+  hero.insertAdjacentElement('afterend',g);c.classList.add('scene-mode');
+  const car=document.getElementById('gcar');
+  if(car&&!document.getElementById('sceneTitle')){
+    const t=document.createElement('div');t.className='scene-title';t.id='sceneTitle';
+    t.innerHTML='<div class="eyebrow">'+($('#heroEyebrow').textContent||'')+'</div><h1>'+$('#heroTitle').innerHTML+'</h1><p>Tap a glowing dot to see that gift</p>';
+    car.insertBefore(t,car.firstChild);
+  }
+  const st=hero.querySelector('.steps');
+  if(st&&!document.getElementById('sceneSteps')){
+    const strip=document.createElement('div');strip.className='scene-steps';strip.id='sceneSteps';
+    const w=document.createElement('div');w.className='wrap';w.appendChild(st);strip.appendChild(w);
+    g.insertAdjacentElement('afterend',strip);
+  }
 }
 function goodiesAdd(id){
   const p=HOLIDAY_BY_ID[id];
   if(!p){toast('Share your details above to request this');document.getElementById('leadForm').scrollIntoView({behavior:'smooth',block:'center'});return;}
-  if(state.lead){setMode('holiday');goCatalog(state.lead.name);setTimeout(function(){addToBox(p.id);},300);return;}
+  if(state.lead){if(!document.getElementById('catalog').classList.contains('active')){setMode('holiday');goCatalog(state.lead.name);}setTimeout(function(){addToBox(p.id);},300);return;}
   pendingAdd=p.id;
   toast('Share your details to start your box');
   document.getElementById('leadForm').scrollIntoView({behavior:'smooth',block:'center'});
   setTimeout(function(){const n=document.getElementById('name');if(n)n.focus({preventScroll:true});},500);
 }
-function goodiesCard(p){
+function goodiesKitItems(si){
+  const sl=(GOODIES_SLIDES.filter(function(s){return s&&s.bg;})[si])||{};const seen={};
+  return (sl.spots||[]).map(function(h){return HOLIDAY_BY_ID[h.product];}).filter(function(p){if(!p||seen[p.id])return false;seen[p.id]=1;return true;});
+}
+function goodiesCard(p,si){
   if(!p)return '';
+  const kit=(si==null)?[]:goodiesKitItems(si);
   return (p.cat?'<span class="cat-tag">'+p.cat+'</span>':'')+
     '<div class="gimg"><img src="'+p.img+'" alt="'+p.name.replace(/"/g,'&quot;')+'" onerror="this.onerror=null;this.src=FALLBACK_IMG"></div>'+
     '<div class="gbody"><div class="gname">'+p.name+'</div><div class="gdesc">'+(p.desc||'')+'</div>'+
     (p.moq?'<div class="card-moq">MOQ '+p.moq+'+ units</div>':'')+
     '<div class="gprice">'+(p.price!=null?genMoney(p.price):podTag())+'</div>'+
-    '<button class="add" data-gadd="'+p.id+'">Add to box +</button></div>';
+    '<button class="add" data-gadd="'+p.id+'">Add to box +</button>'+
+    (kit.length>1?'<button class="gkit" data-gkit="'+si+'">Add full kit to box · '+kit.length+' items</button>':'')+
+    '<button class="gview" data-gview="'+p.id+'">View details</button></div>';
 }
 (function(){
   const track=document.getElementById('gtrack');if(!track||typeof GOODIES_SLIDES==='undefined')return;
@@ -1700,15 +1767,17 @@ function goodiesCard(p){
     return '<div class="gslide" data-s="'+i+'" style="background-image:url(\''+s.bg+'\')">'+
       '<div class="gscene">'+spots.map(function(h){const p=HOLIDAY_BY_ID[h.product];
         return '<button class="gspot'+(h.product===first?' on':'')+'" style="left:'+h.x+'%;top:'+h.y+'%" data-p="'+h.product+'" aria-label="'+p.name.replace(/"/g,'&quot;')+'"><span class="gtip">'+p.name+'</span></button>';}).join('')+'</div>'+
-      '<div class="gcard">'+goodiesCard(HOLIDAY_BY_ID[first])+'</div></div>';
+      '<div class="gcard">'+goodiesCard(HOLIDAY_BY_ID[first],i)+'</div></div>';
   }).join('');
   track.addEventListener('click',function(e){
     const add=e.target.closest('[data-gadd]');if(add){goodiesAdd(add.dataset.gadd);return;}
+    const kb=e.target.closest('[data-gkit]');if(kb){goodiesAddKit(+kb.dataset.gkit);return;}
+    const vw=e.target.closest('[data-gview]');if(vw){if(state.lead&&HOLIDAY_BY_ID[vw.dataset.gview]&&document.getElementById('catalog').classList.contains('active'))openModal(vw.dataset.gview);else goodiesAdd(vw.dataset.gview);return;}
     const sp=e.target.closest('.gspot');if(!sp)return;
     const slide=sp.closest('.gslide'),card=slide.querySelector('.gcard');
     slide.querySelectorAll('.gspot').forEach(function(x){x.classList.toggle('on',x===sp);});
     card.classList.add('swap');
-    setTimeout(function(){card.innerHTML=goodiesCard(HOLIDAY_BY_ID[sp.dataset.p]);card.classList.remove('swap');},150);
+    setTimeout(function(){card.innerHTML=goodiesCard(HOLIDAY_BY_ID[sp.dataset.p],+slide.dataset.s);card.classList.remove('swap');},150);
   });
   const dots=document.getElementById('gDots');
   dots.innerHTML=slides.map(function(s,i){return '<button aria-label="Slide '+(i+1)+'" data-i="'+i+'"></button>';}).join('');
@@ -1908,6 +1977,7 @@ function goCatalog(name){
   document.getElementById('landing').classList.remove('active');
   const c=document.getElementById('catalog');c.classList.add('active');
   document.getElementById('welcomeName').textContent=(name||'there').split(' ')[0];
+  sceneToHeader();
   requestAnimationFrame(()=>c.classList.add('reveal'));window.scrollTo(0,0);
 }
 (function(){
