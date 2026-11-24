@@ -222,14 +222,50 @@ a{color:inherit}
 .cart-foot .btn-primary{width:100%}
 .cart-foot .fineprint{text-align:center;font-size:.72rem;color:var(--slate);margin-top:10px}
 
+/* Goodies scene in the catalogue header (holiday mode, after login) */
+.gbody .gkit{width:100%;margin-top:8px;background:#fff;color:var(--red-deep);border:1.5px solid var(--red-deep);border-radius:30px;padding:10px 12px;font-weight:800;font-size:.82rem;cursor:pointer}
+.gbody .gkit:hover{background:var(--red-deep);color:#fff}
+.gbody .gview{display:block;margin:8px auto 0;background:none;border:none;color:var(--slate);font-size:.78rem;font-weight:700;text-decoration:underline;cursor:pointer}
+#catalog.scene-mode .catalog-hero{display:none}
+#catalog.scene-mode .goodies{padding:0}
+#catalog.scene-mode .goodies-title,#catalog.scene-mode .ghint{display:none}
+.scene-title{display:none}
+#catalog.scene-mode .scene-title{display:block;position:absolute;left:5%;top:7%;z-index:3;pointer-events:none;color:#fff;max-width:600px}
+#catalog.scene-mode .scene-title .eyebrow{color:var(--gold-bright,#E7B84C)}
+#catalog.scene-mode .scene-title h1{font-size:clamp(1.6rem,3vw,2.6rem);font-weight:800;line-height:1.05;margin:8px 0 6px;text-shadow:0 2px 20px rgba(0,0,0,.35)}
+#catalog.scene-mode .scene-title h1 .glow{color:var(--gold-bright,#E7B84C)}
+#catalog.scene-mode .scene-title p{font-size:.9rem;color:rgba(255,255,255,.88)}
+#catalog.scene-mode .gslide::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(60,6,10,.85) 0%,rgba(60,6,10,.55) 30%,rgba(60,6,10,0) 55%);pointer-events:none}
+.scene-steps{background:var(--red-deep,#8E0F17);color:#fff}
+.scene-steps .wrap{max-width:1240px;margin:0 auto;padding:12px 24px}
+.scene-steps .steps{margin-top:0}
+@media(min-width:561px){
+  #catalog.scene-mode .gslide{align-items:flex-end;padding:0 5% 26px}
+  #catalog.scene-mode .gcard{width:min(250px,40%)}
+  #catalog.scene-mode .gimg{aspect-ratio:16/10}
+  #catalog.scene-mode .gdesc{display:none}
+  #catalog.scene-mode .gbody{padding:10px 14px 12px}
+  #catalog.scene-mode .gprice{margin:2px 0 8px}
+  #catalog.scene-mode .gbody .add,#catalog.scene-mode .gbody .gkit{padding-top:8px;padding-bottom:8px}
+}
+@media(max-width:560px){
+  #catalog.scene-mode .scene-title{position:static;max-width:none;padding:18px 18px 14px;background:linear-gradient(135deg,var(--red-deep,#8E0F17),#5c070d)}
+  #catalog.scene-mode .gslide::before{display:none}
+}
+/* Price on Demand: products awaiting a vendor sourcing price */
+.pod{display:inline-flex;align-items:center;gap:5px;font-size:.74rem;font-weight:800;letter-spacing:.02em;color:var(--red-deep);background:#FFF4DA;border:1px solid var(--gold);padding:4px 10px;border-radius:30px;white-space:nowrap;line-height:1.2}
+.pod::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.modal-info .mprice .pod{font-size:.95rem;padding:6px 14px}
+.pod-plus{display:block;font-size:.66rem;font-weight:700;color:var(--red-deep);margin-top:2px}
 /* ==================== MODAL ==================== */
 .modal{position:fixed;inset:0;z-index:55;display:none;align-items:center;justify-content:center;padding:20px}
 .modal.open{display:flex}
 .modal-back{position:absolute;inset:0;background:rgba(43,41,42,.62);backdrop-filter:blur(3px)}
 .modal-card{position:relative;background:#fff;border-radius:22px;width:min(880px,100%);max-height:90vh;overflow:hidden;box-shadow:var(--shadow-lg);display:grid;grid-template-columns:1fr 1fr;animation:pop .28s cubic-bezier(.34,1.4,.5,1)}
 @keyframes pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
-.modal-media{position:relative;min-height:340px;display:flex;align-items:center;justify-content:center}
-.modal-media img{width:100%;height:100%;object-fit:cover}
+.modal-media{position:relative;min-height:340px;display:flex;align-items:center;justify-content:center;background:var(--cream)}
+.modal-media img{width:100%;height:100%;object-fit:contain}
+.modal-media>img{align-self:flex-start;height:auto;aspect-ratio:1/1;background:#fff}
 .modal-info{padding:36px 34px;overflow-y:auto;display:flex;flex-direction:column}
 .modal-info .cat{color:var(--red);font-weight:800;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
 .modal-info h2{font-size:1.7rem;font-weight:800;line-height:1.1;margin-bottom:12px}
@@ -260,8 +296,11 @@ a{color:inherit}
   .landing-split{grid-template-columns:1fr}
   .media-side{min-height:40vh}
   .form-scroll{padding:64px 28px 120px}
-  .modal-card{grid-template-columns:1fr;max-height:88vh}
-  .modal-media{min-height:220px;max-height:34vh}
+  .modal-card{display:block;max-height:88vh;overflow-y:auto}
+  .modal-info{overflow:visible}
+  .modal-media{min-height:0}
+  .modal-media>img{width:min(100%,46vh)}
+  .modal-close{position:sticky;top:12px;margin:12px 12px -50px auto}
 }
 @media(max-width:560px){
   .grid{grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:14px;padding:24px 16px 140px}
@@ -618,13 +657,13 @@ a{color:inherit}
 .seemore{background:none;border:none;color:var(--red);font-weight:800;font-size:.86rem;cursor:pointer;padding:0}
 .seemore:hover{text-decoration:underline}
 .mgallery{display:flex;flex-direction:column;height:100%}
-.mg-main{flex:1;min-height:280px;display:flex;align-items:center;justify-content:center;background:#fff;overflow:hidden}
-.mg-main img{width:100%;height:100%;object-fit:cover}
-.mg-thumbs{display:flex;gap:8px;padding:10px 12px;background:var(--cream)}
+.mg-main{flex:none;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;background:#fff;overflow:hidden}
+.mg-main img{width:100%;height:100%;object-fit:contain}
+.mg-thumbs{display:flex;flex:1;align-items:flex-start;gap:8px;padding:10px 12px;background:var(--cream)}
 .mg-t{width:56px;height:56px;border:2px solid transparent;border-radius:8px;overflow:hidden;background:#fff;cursor:pointer;padding:0}
 .mg-t.on{border-color:var(--red)}
 .mg-t img{width:100%;height:100%;object-fit:cover}
-@media(max-width:860px){.mg-main{min-height:200px}}
+@media(max-width:860px){.mgallery{width:100%}.mg-main{width:min(100%,46vh);align-self:center}.mg-thumbs{flex:none}}
 
 
 /* ===== round 10: header cart + landing steps ===== */
@@ -1170,7 +1209,10 @@ function placeholder(p){
     </svg></div>`;
 }
 function media(p){return p.img?`<img src="${p.img}" alt="${p.name}" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=FALLBACK_IMG"/>`:placeholder(p);}
-function priceLabel(p){return p.price==null?"On request":CONFIG.currency+p.price.toLocaleString('en-IN');}
+const POD_LABEL="Price on Demand";
+function podTag(){return '<span class="pod">'+POD_LABEL+'</span>';}
+function priceLabel(p){return p.price==null?podTag():CONFIG.currency+p.price.toLocaleString('en-IN');}
+function hasPod(items){return items.some(function(p){return p&&p.price==null;});}
 
 /* ============================================================
    STATE + LEAD → SHEET
@@ -1369,7 +1411,7 @@ function makeKits(pool,budget,count,allowRepeat,minTotal){
 
 /* ---------- top tabs: Build Your Box / Custom Box ---------- */
 function renderTopTabs(){
-  $('#filters').innerHTML=(state.mode==='holiday'?[['byb','Curate Your Kit'],['custom','Price Tiers'],['themes','Themes'],['top','Top Rated'],['top10','Top 10 Picks']]:[['byb','Select Your Gifts'],['custom','Price Tiers'],['top','Top Rated']])
+  $('#filters').innerHTML=(state.mode==='holiday'?[['byb','Curate Your Holiday Gift'],['custom','Price Tiers'],['themes','Themes'],['top','Top Rated'],['top10','Top 10 Picks']]:[['byb','Select Your Gifts'],['custom','Price Tiers'],['top','Top Rated']])
    .map(function(x){return '<button class="chip '+(state.tab===x[0]?'active':'')+'" data-top="'+x[0]+'">'+x[1]+'</button>';}).join('');
 }
 function switchTop(t){state.tab=t;renderTopTabs();renderView();window.scrollTo({top:0,behavior:'smooth'});}
@@ -1432,7 +1474,7 @@ function bybCard(p,i){
     '<div class="card-body">'+
       '<div class="card-name">'+p.name+'</div>'+
       '<div class="card-desc">'+p.desc+'</div>'+(p.moq?'<div class="card-moq">MOQ '+p.moq+'+ units</div>':'')+
-      '<div class="card-foot"><div class="price">'+(p.price==null?'<small>On request</small>':CONFIG.currency+p.price.toLocaleString('en-IN'))+'</div></div>'+
+      '<div class="card-foot"><div class="price">'+(p.price==null?podTag():CONFIG.currency+p.price.toLocaleString('en-IN'))+'</div></div>'+
       '<div class="add-wrap">'+btn+'</div>'+
     '</div></article>';
 }
@@ -1570,13 +1612,13 @@ function addKitToBox(i){
 }
 function openEmpPrompt(){
   const pk=state.pendingKit,def=Math.max(pk.maxMoq,(state.gen&&state.gen.emp)||MOQ_FLOOR);
-  document.getElementById('empSub').innerHTML=(pk.label||pk.tier+' kit')+' · '+pk.items.length+' items · '+genMoney(pk.per)+'/person';
+  document.getElementById('empSub').innerHTML=(pk.label||pk.tier+' kit')+' · '+pk.items.length+' items · '+(hasPod(pk.items)?(pk.per>0?genMoney(pk.per)+'/person + '+POD_LABEL+' items':POD_LABEL):genMoney(pk.per)+'/person');
   const inp=document.getElementById('empInput');inp.value=def;inp.min=1;
   updateEmpNote();document.getElementById('empModal').classList.add('open');setTimeout(function(){inp.focus();},50);
 }
 function updateEmpNote(){
   const pk=state.pendingKit,v=parseInt(document.getElementById('empInput').value)||0,note=document.getElementById('empNote');
-  if(v<pk.maxMoq){
+  if(v<pk.maxMoq||(v===pk.maxMoq&&pk.maxMoq>MOQ_FLOOR)){
     const drivers=pk.items.filter(p=>(p.moq||1)===pk.maxMoq);
     if(drivers.length<=2)note.innerHTML='MOQ for '+drivers.map(p=>p.name.split(' ').slice(0,3).join(' ')).join(' & ')+' is '+pk.maxMoq+', so this kit is ordered at '+pk.maxMoq+'/unit.';
     else note.innerHTML='Most items need '+pk.maxMoq+'+ units, so this kit is ordered at '+pk.maxMoq+'/unit.';
@@ -1601,7 +1643,7 @@ const HOLIDAY_BY_ID={};HOLIDAY_PRODUCTS.forEach(function(p){HOLIDAY_BY_ID[p.id]=
 const MODE_COPY={
   diwali:{eyebrow:'Diwali Collection 2026',title:'Gifts worth unboxing',ico:'🪔',
     steps:'<div class="step"><span class="n">1</span><span class="lbl">Share your details</span></div><span class="sep">›</span><div class="step"><span class="n">2</span><span class="lbl">Select products / kits<em>(note the MOQ)</em></span></div><span class="sep">›</span><div class="step"><span class="n">3</span><span class="lbl">Submit &amp; get a quote</span></div>'},
-  holiday:{eyebrow:'Holiday Gifting Collection 2026',title:'Curate Your <span class="glow">Kit</span>',ico:'🎄',
+  holiday:{eyebrow:'Holiday Gifting Collection 2026',title:'Curate Your <span class="glow">Holiday Gift</span>',ico:'🎄',
     steps:'<div class="step"><span class="n">1</span><img class="ico sico" src="assets/holiday/step-1.png" alt="" aria-hidden="true"><span class="lbl">Pick your gifts</span></div><span class="sep">›</span><div class="step"><span class="n">2</span><img class="ico sico" src="assets/holiday/step-2.png" alt="" aria-hidden="true"><span class="lbl">Submit to get quote<em>(note the MOQ)</em></span></div><span class="sep">›</span><div class="step"><span class="n">3</span><img class="ico sico" src="assets/holiday/step-3.png" alt="" aria-hidden="true"><span class="lbl">Get your custom deck and place order</span></div>'}
 };
 function setMode(m){
@@ -1642,10 +1684,10 @@ function renderThemes(){
     return '<article class="'+cls+'">'+
       '<div class="tk-img"><img src="'+k.img+'" alt="'+k.name+'" loading="lazy" onerror="this.onerror=null;this.src=FALLBACK_IMG"></div>'+
       '<div class="tk-body"><div class="tk-main"><h3>'+k.name+'</h3><p class="tk-list">'+names+'</p></div>'+
-      '<div class="tk-side"><div class="tk-price">'+genMoney(kitPrice(k))+'<small>/kit</small></div>'+
+      '<div class="tk-side"><div class="tk-price">'+(hasPod(items)?podTag():genMoney(kitPrice(k))+'<small>/kit</small>')+'</div>'+
       '<button class="add tk-add" onclick="addThemeKit('+i+')">Add to box +</button></div></div>'+
     '</article>';
-  }).join('')+'</div><p class="gst-note">Kit price = sum of the item prices shown. Excluding GST, branding &amp; freight charges.</p>';
+  }).join('')+'</div><p class="gst-note">Kit price = sum of the item prices shown. Kits that include a Price on Demand item are quoted on request. Excluding GST, branding &amp; freight charges.</p>';
 }
 function addThemeKit(i){
   const k=HOLIDAY_KITS[i],items=kitItems(k);if(!items.length)return;
@@ -1656,27 +1698,79 @@ function addThemeKit(i){
 
 /* ---------- GOODIES carousel (GOODIES_SLIDES in holiday-data.js) ---------- */
 let pendingAdd=null;
+let pendingKit=null;
+let pendingView=null;
 function flushPendingAdd(){
+  sceneToHeader();
+  if(pendingKit!=null){const k=pendingKit;pendingKit=null;setTimeout(function(){goodiesAddKit(k);},250);}
+  if(pendingView){const v=pendingView;pendingView=null;setTimeout(function(){openModal(v);},350);}
   if(!pendingAdd)return;const id=pendingAdd;pendingAdd=null;
   setTimeout(function(){addToBox(id);},250);
+}
+/* View details from the goodies card: opens the popup; logged-out visitors sign up first (nothing is added to the box) */
+function goodiesView(id){
+  if(!HOLIDAY_BY_ID[id])return;
+  if(state.lead&&document.getElementById('catalog').classList.contains('active')){openModal(id);return;}
+  if(state.lead){setMode('holiday');goCatalog(state.lead.name);setTimeout(function(){openModal(id);},350);return;}
+  pendingView=id;
+  toast('Share your details to view this gift');
+  document.getElementById('leadForm').scrollIntoView({behavior:'smooth',block:'center'});
+  setTimeout(function(){const n=document.getElementById('name');if(n)n.focus({preventScroll:true});},500);
+}
+/* Add every product in a goodies scene as one kit. Uses the same quantity prompt as Themes, so the
+   visitor sees the kit MOQ (highest MOQ among its items) before anything is added.
+   Kit name: optional "name" on the slide in GOODIES_SLIDES, else "Holiday Goodies N". */
+function goodiesAddKit(si){
+  const items=goodiesKitItems(si);if(!items.length)return;
+  if(!state.lead){pendingKit=si;toast('Share your details to start your box');document.getElementById('leadForm').scrollIntoView({behavior:'smooth',block:'center'});return;}
+  const sl=(GOODIES_SLIDES.filter(function(s){return s&&s.bg;})[si])||{},label=sl.name||('Holiday Goodies '+(si+1));
+  const maxMoq=Math.max(1,...items.map(function(p){return p.moq||1;}));
+  state.pendingKit={tier:label,label:label,items:items,maxMoq:maxMoq,per:items.reduce(function(s,p){return s+(p.price||0);},0)};
+  openEmpPrompt();
+}
+/* After login (holiday mode) the goodies scene moves from the landing footer to the catalogue header */
+function sceneToHeader(){
+  const g=document.getElementById('goodies'),c=document.getElementById('catalog');
+  if(!g||!c||state.mode!=='holiday'||c.classList.contains('scene-mode'))return;
+  const hero=c.querySelector('.catalog-hero');if(!hero)return;
+  hero.insertAdjacentElement('afterend',g);c.classList.add('scene-mode');
+  const car=document.getElementById('gcar');
+  if(car&&!document.getElementById('sceneTitle')){
+    const t=document.createElement('div');t.className='scene-title';t.id='sceneTitle';
+    t.innerHTML='<div class="eyebrow">'+($('#heroEyebrow').textContent||'')+'</div><h1>'+$('#heroTitle').innerHTML+'</h1><p>Tap a glowing dot to see that gift</p>';
+    car.insertBefore(t,car.firstChild);
+  }
+  const st=hero.querySelector('.steps');
+  if(st&&!document.getElementById('sceneSteps')){
+    const strip=document.createElement('div');strip.className='scene-steps';strip.id='sceneSteps';
+    const w=document.createElement('div');w.className='wrap';w.appendChild(st);strip.appendChild(w);
+    g.insertAdjacentElement('afterend',strip);
+  }
 }
 function goodiesAdd(id){
   const p=HOLIDAY_BY_ID[id];
   if(!p){toast('Share your details above to request this');document.getElementById('leadForm').scrollIntoView({behavior:'smooth',block:'center'});return;}
-  if(state.lead){setMode('holiday');goCatalog(state.lead.name);setTimeout(function(){addToBox(p.id);},300);return;}
+  if(state.lead){if(!document.getElementById('catalog').classList.contains('active')){setMode('holiday');goCatalog(state.lead.name);}setTimeout(function(){addToBox(p.id);},300);return;}
   pendingAdd=p.id;
   toast('Share your details to start your box');
   document.getElementById('leadForm').scrollIntoView({behavior:'smooth',block:'center'});
   setTimeout(function(){const n=document.getElementById('name');if(n)n.focus({preventScroll:true});},500);
 }
-function goodiesCard(p){
+function goodiesKitItems(si){
+  const sl=(GOODIES_SLIDES.filter(function(s){return s&&s.bg;})[si])||{};const seen={};
+  return (sl.spots||[]).map(function(h){return HOLIDAY_BY_ID[h.product];}).filter(function(p){if(!p||seen[p.id])return false;seen[p.id]=1;return true;});
+}
+function goodiesCard(p,si){
   if(!p)return '';
+  const kit=(si==null)?[]:goodiesKitItems(si);
   return (p.cat?'<span class="cat-tag">'+p.cat+'</span>':'')+
     '<div class="gimg"><img src="'+p.img+'" alt="'+p.name.replace(/"/g,'&quot;')+'" onerror="this.onerror=null;this.src=FALLBACK_IMG"></div>'+
     '<div class="gbody"><div class="gname">'+p.name+'</div><div class="gdesc">'+(p.desc||'')+'</div>'+
     (p.moq?'<div class="card-moq">MOQ '+p.moq+'+ units</div>':'')+
-    '<div class="gprice">'+(p.price!=null?genMoney(p.price):'<small>On request</small>')+'</div>'+
-    '<button class="add" data-gadd="'+p.id+'">Add to box +</button></div>';
+    '<div class="gprice">'+(p.price!=null?genMoney(p.price):podTag())+'</div>'+
+    '<button class="add" data-gadd="'+p.id+'">Add to box +</button>'+
+    (kit.length>1&&!kit.every(function(x){return x.price==null;})?'<button class="gkit" data-gkit="'+si+'">Add full kit to box · '+kit.length+' items</button>':'')+
+    '<button class="gview" data-gview="'+p.id+'">View details</button></div>';
 }
 (function(){
   const track=document.getElementById('gtrack');if(!track||typeof GOODIES_SLIDES==='undefined')return;
@@ -1688,15 +1782,17 @@ function goodiesCard(p){
     return '<div class="gslide" data-s="'+i+'" style="background-image:url(\''+s.bg+'\')">'+
       '<div class="gscene">'+spots.map(function(h){const p=HOLIDAY_BY_ID[h.product];
         return '<button class="gspot'+(h.product===first?' on':'')+'" style="left:'+h.x+'%;top:'+h.y+'%" data-p="'+h.product+'" aria-label="'+p.name.replace(/"/g,'&quot;')+'"><span class="gtip">'+p.name+'</span></button>';}).join('')+'</div>'+
-      '<div class="gcard">'+goodiesCard(HOLIDAY_BY_ID[first])+'</div></div>';
+      '<div class="gcard">'+goodiesCard(HOLIDAY_BY_ID[first],i)+'</div></div>';
   }).join('');
   track.addEventListener('click',function(e){
     const add=e.target.closest('[data-gadd]');if(add){goodiesAdd(add.dataset.gadd);return;}
+    const kb=e.target.closest('[data-gkit]');if(kb){goodiesAddKit(+kb.dataset.gkit);return;}
+    const vw=e.target.closest('[data-gview]');if(vw){goodiesView(vw.dataset.gview);return;}
     const sp=e.target.closest('.gspot');if(!sp)return;
     const slide=sp.closest('.gslide'),card=slide.querySelector('.gcard');
     slide.querySelectorAll('.gspot').forEach(function(x){x.classList.toggle('on',x===sp);});
     card.classList.add('swap');
-    setTimeout(function(){card.innerHTML=goodiesCard(HOLIDAY_BY_ID[sp.dataset.p]);card.classList.remove('swap');},150);
+    setTimeout(function(){card.innerHTML=goodiesCard(HOLIDAY_BY_ID[sp.dataset.p],+slide.dataset.s);card.classList.remove('swap');},150);
   });
   const dots=document.getElementById('gDots');
   dots.innerHTML=slides.map(function(s,i){return '<button aria-label="Slide '+(i+1)+'" data-i="'+i+'"></button>';}).join('');
@@ -1815,15 +1911,15 @@ function updateCartUI(){
   if(!state.groups.length){items.innerHTML='<div class="cart-empty"><img src="'+PLUSH_URI+'" alt=""><div>Your box is empty.<br>Add products or build a kit to get started.</div></div>';foot.style.display='none';return;}
   items.innerHTML=state.groups.map((g,gi)=>groupCard(g,gi)).join('');
   foot.style.display='block';
-  $('#cartTotal').textContent=CONFIG.currency+boxTotal().toLocaleString('en-IN');
+  $('#cartTotal').innerHTML=CONFIG.currency+boxTotal().toLocaleString('en-IN')+(state.groups.some(function(g){return hasPod(g.items);})?'<small class="pod-plus">+ Price on Demand items</small>':'');
 }
 function groupCard(g,gi){
   const floor=groupMax(g),atFloor=g.emp<=floor,sub=groupSubtotal(g),accent=g.kind==='kit'?tierColor(g.tier):'var(--onyx)';
-  const rows=g.items.map(function(p){return '<div class="cg-row"><div class="cg-th">'+media(p)+'</div><div class="cg-n">'+p.name+'</div><div class="cg-p">'+(p.price==null?'':CONFIG.currency+p.price.toLocaleString('en-IN'))+'</div>'+(g.kind==='loose'?'<button class="cg-rm" title="Remove" onclick="removeLoose(\''+p.id+'\')">×</button>':'')+'</div>';}).join('');
+  const rows=g.items.map(function(p){return '<div class="cg-row"><div class="cg-th">'+media(p)+'</div><div class="cg-n">'+p.name+'</div><div class="cg-p">'+(p.price==null?podTag():CONFIG.currency+p.price.toLocaleString('en-IN'))+'</div>'+(g.kind==='loose'?'<button class="cg-rm" title="Remove" onclick="removeLoose(\''+p.id+'\')">×</button>':'')+'</div>';}).join('');
   const dec=atFloor?'<button class="q-dec" disabled title="Minimum '+floor+' – the box can\'t go below this">−</button>':'<button class="q-dec" onclick="setGroupQty(\''+g.id+'\',-1)">−</button>';
   const qty='<div class="cg-foot"><div class="cg-ql">'+(g.kind==='loose'?'Box quantity':'Employees')+
     '<div class="qty">'+dec+'<input type="number" value="'+g.emp+'" min="'+floor+'" onchange="setGroupQtyVal(\''+g.id+'\',this.value)"><button onclick="setGroupQty(\''+g.id+'\',1)">+</button></div></div>'+
-    '<div class="cg-sub">'+CONFIG.currency+sub.toLocaleString('en-IN')+'</div></div>';
+    '<div class="cg-sub">'+CONFIG.currency+sub.toLocaleString('en-IN')+(hasPod(g.items)?'<small class="pod-plus">+ Price on Demand items</small>':'')+'</div></div>';
   const note=atFloor?'<div class="cg-note">Minimum order '+floor+' (highest MOQ in this '+(g.kind==='loose'?'box':'kit')+'). Can\'t go lower.</div>':'';
   return '<div class="cgroup" style="border-left:3px solid '+accent+'">'+
     '<div class="cg-h"><div><div class="cg-t">'+groupName(g,gi)+'</div><div class="cg-m">'+g.items.length+' item'+(g.items.length!==1?'s':'')+' · '+g.emp+'/unit</div></div><button class="cg-x" onclick="removeGroup(\''+g.id+'\')">Remove</button></div>'+
@@ -1836,7 +1932,7 @@ $('#requestBtn').addEventListener('click',()=>{
   if(!state.groups.length)return;
   const btn=$('#requestBtn');btn.disabled=true;btn.textContent='Sending…';
   const gd=state.groups.map((g,gi)=>({name:groupName(g,gi),kind:g.kind,tier:g.tier||'',qty:g.emp,subtotal:groupSubtotal(g),items:g.items.map(p=>({name:p.name,price:p.price,moq:p.moq,cat:p.cat}))}));
-  const itemsStr=gd.map(x=>x.name+' ('+x.qty+'/unit)\n'+x.items.map(it=>'   • '+it.name+' ×'+x.qty+(it.price!=null?', '+CONFIG.currency+(it.price*x.qty).toLocaleString('en-IN'):'')).join('\n')+'\n   Subtotal '+CONFIG.currency+x.subtotal.toLocaleString('en-IN')).join('\n\n');
+  const itemsStr=gd.map(x=>x.name+' ('+x.qty+'/unit)\n'+x.items.map(it=>'   • '+it.name+' ×'+x.qty+(it.price!=null?', '+CONFIG.currency+(it.price*x.qty).toLocaleString('en-IN'):', '+POD_LABEL)).join('\n')+'\n   Subtotal '+CONFIG.currency+x.subtotal.toLocaleString('en-IN')).join('\n\n');
   const total=boxTotal();
   submitLead('hot',{items:itemsStr,itemsJson:JSON.stringify({groups:gd,total:total}),itemCount:state.groups.length,total:total,headcount:''}).finally(()=>{
     $('#cartPanel').classList.remove('open');buildOrderSummary(gd,total);$('#thanks').classList.add('open');celebrate();
@@ -1845,7 +1941,7 @@ $('#requestBtn').addEventListener('click',()=>{
 });
 function buildOrderSummary(gd,total){
   const el=document.getElementById('thanksSummary');if(!el)return;
-  const blocks=gd.map(function(x){return '<div class="os-g"><div class="os-gh">'+x.name+' · '+x.qty+'/unit</div>'+x.items.map(function(it){return '<div class="os-row"><span>'+it.name+' ×'+x.qty+'</span><span>'+(it.price==null?'':CONFIG.currency+(it.price*x.qty).toLocaleString('en-IN'))+'</span></div>';}).join('')+'<div class="os-row os-sub"><span>Subtotal</span><span>'+CONFIG.currency+x.subtotal.toLocaleString('en-IN')+'</span></div></div>';}).join('');
+  const blocks=gd.map(function(x){return '<div class="os-g"><div class="os-gh">'+x.name+' · '+x.qty+'/unit</div>'+x.items.map(function(it){return '<div class="os-row"><span>'+it.name+' ×'+x.qty+'</span><span>'+(it.price==null?podTag():CONFIG.currency+(it.price*x.qty).toLocaleString('en-IN'))+'</span></div>';}).join('')+'<div class="os-row os-sub"><span>Subtotal</span><span>'+CONFIG.currency+x.subtotal.toLocaleString('en-IN')+'</span></div></div>';}).join('');
   el.innerHTML='<div class="os">'+blocks+'<div class="os-row os-tot"><span>Total</span><span>'+CONFIG.currency+total.toLocaleString('en-IN')+'</span></div><div class="os-ref">Ref '+state.sessionId.toUpperCase()+'</div><div class="os-gst">Excluding GST, branding &amp; freight charges.</div></div>';
 }
 function celebrate(){
@@ -1896,6 +1992,7 @@ function goCatalog(name){
   document.getElementById('landing').classList.remove('active');
   const c=document.getElementById('catalog');c.classList.add('active');
   document.getElementById('welcomeName').textContent=(name||'there').split(' ')[0];
+  sceneToHeader();
   requestAnimationFrame(()=>c.classList.add('reveal'));window.scrollTo(0,0);
 }
 (function(){
