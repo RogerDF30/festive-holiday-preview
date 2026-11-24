@@ -1769,7 +1769,7 @@ function goodiesCard(p,si){
     (p.moq?'<div class="card-moq">MOQ '+p.moq+'+ units</div>':'')+
     '<div class="gprice">'+(p.price!=null?genMoney(p.price):podTag())+'</div>'+
     '<button class="add" data-gadd="'+p.id+'">Add to box +</button>'+
-    (kit.length>1?'<button class="gkit" data-gkit="'+si+'">Add full kit to box · '+kit.length+' items</button>':'')+
+    (kit.length>1&&!kit.every(function(x){return x.price==null;})?'<button class="gkit" data-gkit="'+si+'">Add full kit to box · '+kit.length+' items</button>':'')+
     '<button class="gview" data-gview="'+p.id+'">View details</button></div>';
 }
 (function(){
