@@ -1056,7 +1056,7 @@ body.mode-holiday .catalog-hero{background:linear-gradient(90deg,rgba(60,6,10,.9
    Leave blank for PREVIEW mode (leads print to the console).
    ============================================================ */
 const CONFIG = {
-  endpoint:"",                 // PREVIEW: lead webhook intentionally disabled (production uses the Cloudflare Worker). Leads print to the console only.
+  endpoint:"https://diwali-leads.cs-ai.workers.dev",   // Lead API (Cloudflare Worker). Holiday leads carry catalog:"holiday" → Holiday tabs + Holiday Chat space.
   productsCsvUrl:"",                                                // (disabled) Worker product feed, leave blank to read the Sheet directly
   sheetCsvUrl:"",   // Holiday page: Diwali sheet not loaded; // LIVE Google Sheet CSV, the catalogue reads this directly and auto-updates on reload
   currency:"₹"
@@ -1219,7 +1219,7 @@ function hasPod(items){return items.some(function(p){return p&&p.price==null;});
    ============================================================ */
 const state={mode:'diwali',boxes:{diwali:[],holiday:[]},lead:null,sessionId:"cs-"+Date.now().toString(36)+Math.random().toString(36).slice(2,7),tab:'byb',ctab:'Signature',groups:[],swap:null,gen:null,pregen:null,pregenShown:null,viewKits:null,viewCtx:null,pendingKit:null,byb:{sort:'pl',min:0,max:Infinity,cat:'',q:''}};
 function submitLead(type,extra={}){
-  const payload=Object.assign({type,sessionId:state.sessionId,timestamp:new Date().toISOString(),
+  const payload=Object.assign({type,catalog:"holiday",sessionId:state.sessionId,timestamp:new Date().toISOString(),
     name:state.lead?.name||"",email:state.lead?.email||"",phone:state.lead?.phone||"",org:state.lead?.org||""},extra);
   if(!CONFIG.endpoint){console.log("%c[PREVIEW] "+type.toUpperCase()+" LEAD","color:#E51D23;font-weight:bold",payload);return Promise.resolve();}
   return fetch(CONFIG.endpoint,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)}).catch(e=>console.warn("Lead send failed",e));
